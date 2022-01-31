@@ -1,21 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
+import { Provider } from 'react-redux';
+import AppLoading from 'expo-app-loading';
+import { Rajdhani_500Medium, Rajdhani_600SemiBold, Rajdhani_700Bold } from '@expo-google-fonts/rajdhani';
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import Routes from './src/routes/';
+import { ChallengesProvider } from './src/contexts/ChallengesContext';
+import { CountdownProvider } from './src/contexts/CountdownContext';
+import { AuthProvider } from './src/contexts/AuthContext';
+import Store from './src/store/index';
+import { Toast } from './src/components/Toast';
+
+interface AppProps {
+  level: number;
+  experience: number;
+  currentExperience: number;
+  challengesCompleted: number;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App(props: AppProps) {
+
+  const [fontsLoaded] = useFonts({
+    Rajdhani_500Medium,
+    Rajdhani_700Bold,
+    Rajdhani_600SemiBold,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
+
+  if(!fontsLoaded){
+    return <AppLoading />
+  }
+
+  return (
+    <Provider store={Store}>
+      <AuthProvider>
+        <ChallengesProvider
+          level={props.level}
+          currentExperience={props.currentExperience}
+          experience={props.experience}
+          challengesCompleted={props.challengesCompleted}
+        >
+          <CountdownProvider>
+            <Routes />
+            <Toast />
+          </CountdownProvider>
+        </ChallengesProvider>
+      </AuthProvider>
+    </Provider>
+  );
+}

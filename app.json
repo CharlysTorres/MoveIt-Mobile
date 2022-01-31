@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "moveit",
+    "name": "Move.It",
     "slug": "moveit",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,6 +10,33 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#ffffff",
+          "sounds": ["./src/assets/notification.mp3"],
+          "mode": "production"
+        }
+      ]
+    ],
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -17,13 +44,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.companytorres.moveit",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.companytorres.moveit",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
